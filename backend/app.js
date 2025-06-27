@@ -6,9 +6,14 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["https://wittywander.onrender.com"]
+    : ["http://localhost:5173", "https://wittywander.onrender.com"];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
