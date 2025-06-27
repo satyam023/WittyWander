@@ -7,22 +7,28 @@ export default function Login() {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+
     try {
       const res = await API.post("/auth/login", { email, password });
       login(res.data.token);
       navigate("/home");
     } catch (err) {
-      const backendError = err?.data?.error;
+      const backendError = err?.response?.data?.error;
       if (backendError) {
         setError(backendError);
       } else {
         setError("Something went wrong. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +70,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
           <input
             type="password"
@@ -72,13 +79,17 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded transition"
+            disabled={loading}
+            className={`w-full ${
+              loading ? "bg-indigo-400" : "bg-indigo-600 hover:bg-indigo-700"
+            } text-white font-semibold py-3 rounded transition`}
           >
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
