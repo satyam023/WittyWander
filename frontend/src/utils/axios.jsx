@@ -1,6 +1,12 @@
 import axios from "axios";
+
+const url =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000/api"
+    : "https://wittywander-backend.onrender.com/api";
+
 const API = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: url,
 });
 
 API.interceptors.request.use(
