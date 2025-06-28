@@ -47,7 +47,7 @@ export default function Navbar() {
           <Link
             to={user ? "/dashboard" : "/"}
             className={`text-2xl font-bold tracking-wide transition-colors ${
-              isActive(user ? "/dashboard" : "/")
+              isActive(user && "/home")
                 ? "text-yellow-300"
                 : "hover:text-yellow-300"
             }`}
@@ -55,7 +55,6 @@ export default function Navbar() {
             WittyWander
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {user ? (
               <>
