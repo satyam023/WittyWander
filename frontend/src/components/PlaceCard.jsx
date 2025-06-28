@@ -63,6 +63,7 @@ export default function PlaceCard({ place, onPlaceDeleted }) {
     } catch (err) {
       console.error("Delete Error:", err);
       toast.error("Failed to delete place.");
+      window.location.reload();
     } finally {
       setDeleting(false);
       setShowConfirmDialog(false);

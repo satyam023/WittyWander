@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
+const compression = require("compression");
 const connectDB = require("./config/db");
-
 const app = express();
+app.use(compression());
 
 const allowedOrigins =
   process.env.NODE_ENV === "production"
@@ -27,4 +27,4 @@ app.use("/api/places", require("./routes/placeRoutes"));
 connectDB();
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
